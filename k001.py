@@ -1,5 +1,7 @@
 import keras
 from keras.datasets import mnist
+from keras.models import Sequential
+from keras.layers import Dense, Dropout
 
 import cv2
 
@@ -21,9 +23,15 @@ img_test  = img_test.reshape( 10000, 784 ).astype( 'float32' ) / 255
 num_train = keras.utils.np_utils.to_categorical( num_train.astype( 'int32' ), 10 )
 num_test  = keras.utils.np_utils.to_categorical( num_test.astype( 'int32' ), 10 )
 
+# モデルの作成
 model = Sequential()
+model.add( Dense( 512, activation='relu', input_shape=( 784, ) ) )
+model.add( Dropout( 0.2 ) )
+model.add( Dense( 512, activation='relu' ) )
+model.add( Dropout( 0.2 ) )
+model.add( Dense( 10, activation='softmax' ) )
+model.summary()
 
-#ind = 0
 #while ind < len( img_train ) :
 #	num = num_train[ ind ]
 #	img = img_train[ ind ]
